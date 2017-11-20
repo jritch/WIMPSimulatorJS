@@ -1,3 +1,3 @@
 # WIMPSimulatorJS
 
-Simulating variaus OS GUI on the browser
+Simulating various OS GUI on the browser
