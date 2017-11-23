@@ -10,6 +10,7 @@ $(function(){
         {title: "The.Walking.Dead.S08E01.1080p.WEB-DL.DD5.1.H264-RARBG.mp4", key: "vlc_4"}
       ]},
       {title: "CHI Papers", folder: true, children: [
+        {title: "PAPER_TITLES.txt"},
         {title: "p76-wilson.pdf"},
         {title: "p255-lobiaonco.pdf"},
         {title: "W10-Baecker.pdf"},
@@ -82,6 +83,14 @@ $(function(){
           $(data.node.span).addClass("pending");
         }
       }
-    }
+    },
+    activate: function(event, data){
+        // $("#statusLine").text(event.type + ": " + data.node);
+        console.log(event.type + ": " + data.node);
+        if (data.node.title == 'PAPER_TITLES.txt') {
+            console.log("Open Notepad!");
+        }
+
+      },
   });
 });
