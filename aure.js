@@ -19,12 +19,14 @@ $(function(){
         }
         else if (currState == State.RECORD) {
             currState = State.EDIT;
+            aure.find('#aure-editor').removeClass('small')
             recordHead.removeClass('record').addClass('edit');
             recordHead.find('.icon').hide();
             recordHead.find('#play-icon').show();
         }
         else {
             currState = State.IDLE;
+            aure.find('#aure-editor').addClass('small')
             recordHead.find('.icon').hide();
             recordHead.removeClass('edit').addClass('record');
         }
