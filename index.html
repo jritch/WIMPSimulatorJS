@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="http://w2ui.com/src/w2ui-1.4.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mar10/fancytree@v2/dist/skin-win8/ui.fancytree.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   
   <link href="tree.css" rel="stylesheet" />
   <link href="aure.css" rel="stylesheet" />
@@ -38,10 +39,44 @@
                 <div id="aure-header" class="handle">
                     <p>AuRe</p>
                 </div>
+                <div id="aure-actions">
+                    <div class="aure-action">
+                        <div class="aure-action-icon">
+                            <i class="fa fa-copy"></i>
+                        </div>
+                        <div>
+                            <p>Test Action 1</p>
+                        </div>
+                    </div>
+                    <div class="aure-action">
+                        <div class="aure-action-icon">
+                            <i class="fa fa-paste"></i>
+                        </div>
+                        <div>
+                            <p>Test Action 2</p>
+                        </div>
+                    </div>
+                    <div class="aure-action">
+                        <div class="aure-action-icon">
+                            <i class="fa fa-file-excel-o"></i>
+                        </div>
+                        <div>
+                            <p>Test Action 3</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="aure-buttons">
+                    <div id="aure-cancel" class="circle-button">
+                        <i class="fa fa-times icon"></i>
+                    </div>
+                    <div id="aure-save" class="circle-button">
+                        <i class="fa fa-save icon"></i>
+                    </div>
+                </div>
             </div>
-            <div id="record-head" class="handle">
-                <div hidden id="play-icon" class="icon"></div>
-                <div hidden id="stop-icon" class="icon"></div>
+            <div id="record-head" class="handle circle-button">
+                <i class="fa fa-play icon hidden"></i>
+                <i class="fa fa-stop icon hidden"></i>
             </div>
         </div>
     </div>

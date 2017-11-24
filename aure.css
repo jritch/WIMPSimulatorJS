@@ -1,84 +1,91 @@
 #aure {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 1000;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-#aure-container {
+  position: fixed;
+  top: 10%;
+  left: 35%;
+  z-index: 1000;
+  overflow: hidden;
+  pointer-events: none; }
+  #aure p {
+    font-size: 12pt;
+    padding: 5px; }
+  #aure #aure-container {
     position: relative;
     width: 100%;
-    height: 100%;
-}
-
-#aure-editor {
-    pointer-events: auto !important;
-    width: 200px;
-    height: 300px;
-    border: 1px solid;
-    background: blue;
-    transform-origin: 175px 275px;
-    transition: transform 0.5s;
-}
-
-#aure p {
-    font-size: 12pt;
-    color: white;
-    padding: 5px;
-}
-
-#aure-editor.small {
-    transform: scale(0.03, 0.02);
-}
-
-#aure-header {
-    position: absolute;
-    width: 100%;
-    height: 30px;
-    background: green;
-}
-
-#record-head {
+    height: 100%; }
+    #aure #aure-container #aure-editor {
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto !important;
+      width: 400px;
+      height: 600px;
+      border: 1px solid;
+      background: whitesmoke;
+      transform-origin: 375px 575px;
+      transition: transform 0.5s; }
+      #aure #aure-container #aure-editor.small {
+        transform: scale(0.03, 0.02); }
+      #aure #aure-container #aure-editor #aure-header {
+        width: 398px;
+        height: 30px;
+        margin-bottom: 10px;
+        background: linear-gradient(#dae6f3, #c2d5ed); }
+      #aure #aure-container #aure-editor #aure-actions {
+        display: flex;
+        padding: 10px;
+        flex-direction: column; }
+        #aure #aure-container #aure-editor #aure-actions .aure-action {
+          display: flex;
+          padding: 5px;
+          height: 50px; }
+          #aure #aure-container #aure-editor #aure-actions .aure-action p {
+            margin: 0; }
+          #aure #aure-container #aure-editor #aure-actions .aure-action .aure-action-icon {
+            width: 25px;
+            margin-right: 20px; }
+            #aure #aure-container #aure-editor #aure-actions .aure-action .aure-action-icon i {
+              font-size: 25px;
+              margin-right: 10px; }
+      #aure #aure-container #aure-editor #aure-buttons {
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        width: 340px;
+        height: 60px; }
+        #aure #aure-container #aure-editor #aure-buttons #aure-save {
+          background: royalblue;
+          border: 3px solid navy; }
+  #aure #record-head {
     pointer-events: auto !important;
     position: absolute;
     bottom: 10px;
-    right: 10px;
+    right: 10px; }
+    #aure #record-head.record {
+      background: red;
+      border: 3px solid maroon; }
+    #aure #record-head.edit {
+      background: limegreen;
+      border: 3px solid green; }
+      #aure #record-head.edit.disabled {
+        background: lightgray;
+        border: 3px solid gray;
+        cursor: not-allowed; }
+  #aure .circle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     border-radius: 50%;
     width: 50px;
     height: 50px;
     background: red;
-    border: 3px solid maroon;
-}
+    border: 3px solid maroon; }
+    #aure .circle-button .icon {
+      color: white;
+      font-size: 25px; }
+      #aure .circle-button .icon.hidden {
+        color: transparent; }
 
-#record-head.record {
-    background: red;
-    border: 3px solid maroon;
-}
-
-#record-head.edit {
-    background: limegreen;
-    border: 3px solid green;
-}
-
-#play-icon {
-    position: absolute;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 20px solid white;
-    width: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-40%, -50%);
-}
-
-#stop-icon {
-    position: absolute;
-    width: 45%;
-    height: 45%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-}
+/*# sourceMappingURL=aure.css.map */
