@@ -18,7 +18,7 @@
       pointer-events: auto !important;
       width: 400px;
       height: 600px;
-      border: 1px solid;
+      border: 1px solid #bbb;
       background: whitesmoke;
       transform-origin: 375px 575px;
       transition: transform 0.5s; }
@@ -27,24 +27,37 @@
       #aure #aure-container #aure-editor #aure-header {
         width: 398px;
         height: 30px;
-        margin-bottom: 10px;
         background: linear-gradient(#dae6f3, #c2d5ed); }
       #aure #aure-container #aure-editor #aure-actions {
         display: flex;
-        padding: 10px;
         flex-direction: column; }
         #aure #aure-container #aure-editor #aure-actions .aure-action {
           display: flex;
-          padding: 5px;
-          height: 50px; }
+          padding: 10px;
+          min-height: 50px; }
+          #aure #aure-container #aure-editor #aure-actions .aure-action:nth-child(odd) {
+            background: whitesmoke; }
+          #aure #aure-container #aure-editor #aure-actions .aure-action:nth-child(even) {
+            background: gainsboro; }
+          #aure #aure-container #aure-editor #aure-actions .aure-action.needs-list {
+            background: lightcoral; }
+          #aure #aure-container #aure-editor #aure-actions .aure-action.has-list {
+            background: lightgreen; }
           #aure #aure-container #aure-editor #aure-actions .aure-action p {
             margin: 0; }
-          #aure #aure-container #aure-editor #aure-actions .aure-action .aure-action-icon {
-            width: 25px;
-            margin-right: 20px; }
-            #aure #aure-container #aure-editor #aure-actions .aure-action .aure-action-icon i {
+          #aure #aure-container #aure-editor #aure-actions .aure-action .icon {
+            width: 25px; }
+            #aure #aure-container #aure-editor #aure-actions .aure-action .icon i {
               font-size: 25px;
-              margin-right: 10px; }
+              margin-top: 3px; }
+            #aure #aure-container #aure-editor #aure-actions .aure-action .icon.aure-action-icon {
+              margin-right: 20px; }
+            #aure #aure-container #aure-editor #aure-actions .aure-action .icon.aure-add-list {
+              margin-left: auto;
+              display: none;
+              cursor: pointer; }
+          #aure #aure-container #aure-editor #aure-actions .aure-action.listable > .aure-add-list {
+            display: block; }
       #aure #aure-container #aure-editor #aure-buttons {
         margin-top: auto;
         display: flex;
