@@ -35,42 +35,85 @@
 
     <div id="aure">
         <div id="aure-container">
-            <div id="aure-editor" class="small">
-                <div id="aure-header" class="handle">
-                    <p>AuRe</p>
+            <div id="aure-action-editor" class="small">
+                <div id="aure-list" class="visible">
+                    <div class="aure-header">
+                        <p>List</p>
+                    </div>
+                    <ul id="aure-list-items">
+                        <li class="aure-list-item">1.png</li>
+                        <li class="aure-list-item">2.png</li>
+                        <li class="aure-list-item">3.png</li>
+                    </ul>
                 </div>
-                <div id="aure-actions">
-                    <div class="aure-action">
-                        <div class="aure-action-icon">
-                            <i class="fa fa-copy"></i>
+                <div id="aure-editor">
+                    <div class="aure-header handle">
+                        <p>AuRe</p>
+                    </div>
+                    <div id="aure-actions">
+                        <div class="aure-action">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-copy"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 1 which has a long name that fills the width of the editor pane</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
                         </div>
-                        <div>
-                            <p>Test Action 1</p>
+                        <div class="aure-action listable has-list">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-paste"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 2 with an approxmately equally long name as the previous action</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
+                        </div>
+                        <div class="aure-action listable needs-list">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-file-excel-o"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 3 whose name is comparatively short</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
+                        </div>
+                        <div class="aure-action">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-file-excel-o"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 3 whose name is comparatively short</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
+                        </div>
+                        <div class="aure-action">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-file-excel-o"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 3 whose name is comparatively short</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="aure-action">
-                        <div class="aure-action-icon">
-                            <i class="fa fa-paste"></i>
+                    <div id="aure-buttons">
+                        <div id="aure-cancel" class="circle-button">
+                            <i class="fa fa-times icon"></i>
                         </div>
-                        <div>
-                            <p>Test Action 2</p>
+                        <div id="aure-save" class="circle-button">
+                            <i class="fa fa-save icon"></i>
                         </div>
-                    </div>
-                    <div class="aure-action">
-                        <div class="aure-action-icon">
-                            <i class="fa fa-file-excel-o"></i>
-                        </div>
-                        <div>
-                            <p>Test Action 3</p>
-                        </div>
-                    </div>
-                </div>
-                <div id="aure-buttons">
-                    <div id="aure-cancel" class="circle-button">
-                        <i class="fa fa-times icon"></i>
-                    </div>
-                    <div id="aure-save" class="circle-button">
-                        <i class="fa fa-save icon"></i>
                     </div>
                 </div>
             </div>

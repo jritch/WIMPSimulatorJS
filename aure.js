@@ -12,7 +12,7 @@ $(function(){
     function setState(s) {
         currState = s;
         if (currState == State.IDLE) {
-            aure.find('#aure-editor').addClass('small')
+            aure.find('#aure-action-editor').addClass('small')
             recordHead.find('.icon').addClass('hidden');
             recordHead.removeClass('edit').addClass('record');
         }
@@ -21,7 +21,7 @@ $(function(){
             recordHead.find('.fa-stop').removeClass('hidden');
         }
         else {
-            aure.find('#aure-editor').removeClass('small')
+            aure.find('#aure-action-editor').removeClass('small')
             recordHead.removeClass('record').addClass('edit');
             recordHead.find('.icon').addClass('hidden');
             recordHead.find('.fa-play').removeClass('hidden');
@@ -43,5 +43,8 @@ $(function(){
     })
     aure.find('#aure-cancel').click(function(e) { setState(State.IDLE) })
 
-    setState(State.EDIT);
+    $('#aure-list-items').sortable();
+    $('#aure-list-items').disableSelection();
+    $('#aure-actions').sortable();
+    $('#aure-actions').disableSelection();
 });
