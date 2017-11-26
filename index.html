@@ -4,23 +4,23 @@
   <meta name="description" content="Fancytree Playground Sample 1">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <link href="https://cdn.jsdelivr.net/gh/mar10/fancytree@v2/dist/skin-win8/ui.fancytree.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://w2ui.com/src/w2ui-1.4.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mar10/fancytree@v2/dist/skin-win8/ui.fancytree.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   
   <link href="tree.css" rel="stylesheet" />
+  <link href="aure.css" rel="stylesheet" />
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/mar10/fancytree@v2/dist/jquery.fancytree-all-deps.min.js"></script>
+  <script type="text/javascript" src="http://w2ui.com/src/w2ui-1.4.min.js"></script>
 
   <script src="treeEditable.js"></script>
-
-  <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="aure.js"></script>
 
 </head>
 <body>
@@ -28,8 +28,101 @@
         <div class="col-sm-4">
             <div id="tree"></div>
         </div>
-        <div class="col-sm-8"></div>
+        <div class="col-sm-8">
+            <div id="myApps" style="height: 700px"></div>
+        </div>
     </div>
 
+    <div id="aure">
+        <div id="aure-container">
+            <div id="aure-action-editor" class="small">
+                <div id="aure-list" class="visible">
+                    <div class="aure-header">
+                        <p>List</p>
+                    </div>
+                    <ul id="aure-list-items">
+                        <li class="aure-list-item">1.png</li>
+                        <li class="aure-list-item">2.png</li>
+                        <li class="aure-list-item">3.png</li>
+                    </ul>
+                </div>
+                <div id="aure-editor">
+                    <div class="aure-header handle">
+                        <p>AuRe</p>
+                    </div>
+                    <div id="aure-actions">
+                        <div class="aure-action">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-copy"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 1 which has a long name that fills the width of the editor pane</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
+                        </div>
+                        <div class="aure-action listable has-list">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-paste"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 2 with an approxmately equally long name as the previous action</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
+                        </div>
+                        <div class="aure-action listable needs-list">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-file-excel-o"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 3 whose name is comparatively short</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
+                        </div>
+                        <div class="aure-action">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-file-excel-o"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 3 whose name is comparatively short</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
+                        </div>
+                        <div class="aure-action">
+                            <div class="aure-action-icon icon">
+                                <i class="fa fa-file-excel-o"></i>
+                            </div>
+                            <div>
+                                <p>Test Action 3 whose name is comparatively short</p>
+                            </div>
+                            <div class="aure-add-list icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="aure-buttons">
+                        <div id="aure-cancel" class="circle-button">
+                            <i class="fa fa-times icon"></i>
+                        </div>
+                        <div id="aure-save" class="circle-button">
+                            <i class="fa fa-save icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="record-head" class="handle circle-button">
+                <i class="fa fa-play icon hidden"></i>
+                <i class="fa fa-stop icon hidden"></i>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
