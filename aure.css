@@ -10,95 +10,123 @@
     padding: 5px; }
   #aure #aure-container {
     position: relative;
-    width: 100%;
+    overflow: visible;
+    width: 600px;
     height: 100%; }
-    #aure #aure-container #aure-editor {
-      display: flex;
-      flex-direction: column;
-      pointer-events: auto !important;
-      width: 400px;
-      height: 600px;
-      border: 1px solid #bbb;
-      background: whitesmoke;
+    #aure #aure-container #aure-action-editor {
       transform-origin: 375px 575px;
       transition: transform 0.5s; }
-      #aure #aure-container #aure-editor.small {
+      #aure #aure-container #aure-action-editor.small {
         transform: scale(0.03, 0.02); }
-      #aure #aure-container #aure-editor #aure-header {
-        width: 398px;
+      #aure #aure-container #aure-action-editor .aure-header {
         height: 30px;
         background: linear-gradient(#dae6f3, #c2d5ed); }
-      #aure #aure-container #aure-editor #aure-actions {
+      #aure #aure-container #aure-action-editor #aure-editor {
+        z-index: 10000;
         display: flex;
-        flex-direction: column; }
-        #aure #aure-container #aure-editor #aure-actions .aure-action {
+        flex-direction: column;
+        pointer-events: auto !important;
+        width: 400px;
+        height: 600px;
+        border: 1px solid #bbb;
+        background: whitesmoke; }
+        #aure #aure-container #aure-action-editor #aure-editor .aure-header {
+          width: 398px; }
+        #aure #aure-container #aure-action-editor #aure-editor #aure-actions {
           display: flex;
-          padding: 10px;
-          min-height: 50px; }
-          #aure #aure-container #aure-editor #aure-actions .aure-action:nth-child(odd) {
-            background: whitesmoke; }
-          #aure #aure-container #aure-editor #aure-actions .aure-action:nth-child(even) {
-            background: gainsboro; }
-          #aure #aure-container #aure-editor #aure-actions .aure-action.needs-list {
-            background: lightcoral; }
-          #aure #aure-container #aure-editor #aure-actions .aure-action.has-list {
-            background: lightgreen; }
-          #aure #aure-container #aure-editor #aure-actions .aure-action p {
-            margin: 0; }
-          #aure #aure-container #aure-editor #aure-actions .aure-action .icon {
-            width: 25px; }
-            #aure #aure-container #aure-editor #aure-actions .aure-action .icon i {
-              font-size: 25px;
-              margin-top: 3px; }
-            #aure #aure-container #aure-editor #aure-actions .aure-action .icon.aure-action-icon {
-              margin-right: 20px; }
-            #aure #aure-container #aure-editor #aure-actions .aure-action .icon.aure-add-list {
-              margin-left: auto;
-              display: none;
-              cursor: pointer; }
-          #aure #aure-container #aure-editor #aure-actions .aure-action.listable > .aure-add-list {
-            display: block; }
-      #aure #aure-container #aure-editor #aure-buttons {
-        margin-top: auto;
-        display: flex;
-        justify-content: space-between;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-bottom: 10px;
-        width: 340px;
-        height: 60px; }
-        #aure #aure-container #aure-editor #aure-buttons #aure-save {
-          background: royalblue;
-          border: 3px solid navy; }
-  #aure #record-head {
-    pointer-events: auto !important;
-    position: absolute;
-    bottom: 10px;
-    right: 10px; }
-    #aure #record-head.record {
+          flex-direction: column; }
+          #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action {
+            display: flex;
+            padding: 10px;
+            min-height: 50px; }
+            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action:nth-child(odd) {
+              background: whitesmoke; }
+            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action:nth-child(even) {
+              background: gainsboro; }
+            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action.needs-list {
+              background: lightcoral; }
+            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action.has-list {
+              background: lightgreen; }
+            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action p {
+              margin: 0; }
+            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .icon {
+              width: 25px; }
+              #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .icon i {
+                font-size: 25px;
+                margin-top: 3px; }
+              #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .icon.aure-action-icon {
+                margin-right: 20px; }
+              #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .icon.aure-add-list {
+                margin-left: auto;
+                display: none;
+                cursor: pointer; }
+            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action.listable > .aure-add-list {
+              display: block; }
+        #aure #aure-container #aure-action-editor #aure-editor #aure-buttons {
+          margin-top: auto;
+          display: flex;
+          justify-content: space-between;
+          padding-left: 10px;
+          padding-right: 10px;
+          padding-bottom: 10px;
+          width: 340px;
+          height: 60px; }
+          #aure #aure-container #aure-action-editor #aure-editor #aure-buttons #aure-save {
+            background: royalblue;
+            border: 3px solid navy; }
+      #aure #aure-container #aure-action-editor #aure-list {
+        pointer-events: auto !important;
+        z-index: -1000;
+        position: absolute;
+        left: 200px;
+        top: 30px;
+        width: 200px;
+        max-height: 500px;
+        transition: left 0.5s;
+        border: 1px solid #bbb;
+        background: whitesmoke; }
+        #aure #aure-container #aure-action-editor #aure-list.visible {
+          left: 399px; }
+        #aure #aure-container #aure-action-editor #aure-list #aure-list-items {
+          list-style-type: none;
+          padding: 0;
+          margin: 0; }
+          #aure #aure-container #aure-action-editor #aure-list #aure-list-items .aure-list-item {
+            padding: 5px 10px 5px 10px;
+            font-size: 12pt; }
+            #aure #aure-container #aure-action-editor #aure-list #aure-list-items .aure-list-item:nth-child(odd) {
+              background: whitesmoke; }
+            #aure #aure-container #aure-action-editor #aure-list #aure-list-items .aure-list-item:nth-child(even) {
+              background: gainsboro; }
+    #aure #aure-container #record-head {
+      pointer-events: auto !important;
+      position: absolute;
+      top: 540px;
+      left: 340px; }
+      #aure #aure-container #record-head.record {
+        background: red;
+        border: 3px solid maroon; }
+      #aure #aure-container #record-head.edit {
+        background: limegreen;
+        border: 3px solid green; }
+        #aure #aure-container #record-head.edit.disabled {
+          background: lightgray;
+          border: 3px solid gray;
+          cursor: not-allowed; }
+    #aure #aure-container .circle-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
       background: red;
       border: 3px solid maroon; }
-    #aure #record-head.edit {
-      background: limegreen;
-      border: 3px solid green; }
-      #aure #record-head.edit.disabled {
-        background: lightgray;
-        border: 3px solid gray;
-        cursor: not-allowed; }
-  #aure .circle-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    background: red;
-    border: 3px solid maroon; }
-    #aure .circle-button .icon {
-      color: white;
-      font-size: 25px; }
-      #aure .circle-button .icon.hidden {
-        color: transparent; }
+      #aure #aure-container .circle-button .icon {
+        color: white;
+        font-size: 25px; }
+        #aure #aure-container .circle-button .icon.hidden {
+          color: transparent; }
 
 /*# sourceMappingURL=aure.css.map */

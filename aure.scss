@@ -11,17 +11,11 @@
     }
     #aure-container {
         position: relative;
-        width: 100%;
+        overflow: visible;
+        width: 600px;
         height: 100%;
 
-        #aure-editor {
-            display: flex;
-            flex-direction: column;
-            pointer-events: auto !important;
-            width: 400px;
-            height: 600px;
-            border: 1px solid #bbb;
-            background: whitesmoke;
+        #aure-action-editor {
             transform-origin: 375px 575px;
             transition: transform 0.5s;
 
@@ -29,120 +23,161 @@
                 transform: scale(0.03, 0.02);
             }
 
-            #aure-header {
-                width: 398px;
+            .aure-header {
                 height: 30px;
                 background: linear-gradient(#dae6f3,#c2d5ed);
             }
 
-            #aure-actions {
+            #aure-editor {
+                z-index: 10000;
                 display: flex;
                 flex-direction: column;
+                pointer-events: auto !important;
+                width: 400px;
+                height: 600px;
+                border: 1px solid #bbb;
+                background: whitesmoke;
 
-                .aure-action {
+                .aure-header {
+                    width: 398px;
+                }
+
+                #aure-actions {
                     display: flex;
-                    padding: 10px;
-                    min-height: 50px;
+                    flex-direction: column;
 
-                    &:nth-child(odd) {
-                        background: whitesmoke;
-                    }
-                    &:nth-child(even) {
-                        background: gainsboro;
-                    }
+                    .aure-action {
+                        display: flex;
+                        padding: 10px;
+                        min-height: 50px;
 
-                    &.needs-list {
-                        background: lightcoral;
-                    }
+                        &:nth-child(odd) { background: whitesmoke; }
+                        &:nth-child(even) { background: gainsboro; }
 
-                    &.has-list {
-                        background: lightgreen;
-                    }
-
-                    p {
-                        margin: 0;
-                    }
-                    
-                    .icon {
-                        width: 25px;
-                        i {
-                            font-size: 25px;
-                            margin-top: 3px;
+                        &.needs-list {
+                            background: lightcoral;
                         }
-                        &.aure-action-icon {
-                            margin-right: 20px;
+
+                        &.has-list {
+                            background: lightgreen;
                         }
-                        &.aure-add-list {
-                            margin-left: auto;
-                            display: none;
-                            cursor: pointer;
+
+                        p {
+                            margin: 0;
+                        }
+                        
+                        .icon {
+                            width: 25px;
+                            i {
+                                font-size: 25px;
+                                margin-top: 3px;
+                            }
+                            &.aure-action-icon {
+                                margin-right: 20px;
+                            }
+                            &.aure-add-list {
+                                margin-left: auto;
+                                display: none;
+                                cursor: pointer;
+                            }
+                        }
+
+                        &.listable > .aure-add-list {
+                            display: block;
                         }
                     }
+                }
 
-                    &.listable > .aure-add-list {
-                        display: block;
+                #aure-buttons {
+                    margin-top: auto;
+                    display: flex;
+                    justify-content: space-between;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    padding-bottom: 10px;
+                    width: 340px;
+                    height: 60px;
+
+                    #aure-save {
+                        background: royalblue;
+                        border: 3px solid navy;
                     }
                 }
             }
 
-            #aure-buttons {
-                margin-top: auto;
-                display: flex;
-                justify-content: space-between;
-                padding-left: 10px;
-                padding-right: 10px;
-                padding-bottom: 10px;
-                width: 340px;
-                height: 60px;
+            #aure-list {
+                pointer-events: auto !important;
+                z-index: -1000;
+                position: absolute;
+                left: 200px;
+                top: 30px;
+                width: 200px;
+                max-height: 500px;
+                transition: left 0.5s;
+                border: 1px solid #bbb;
+                background: whitesmoke;
 
-                #aure-save {
-                    background: royalblue;
-                    border: 3px solid navy;
+                &.visible {
+                    left: 399px
+                }
+
+                #aure-list-items {
+                    list-style-type: none;
+                    padding: 0;
+                    margin: 0;
+
+                    .aure-list-item {
+                        &:nth-child(odd) { background: whitesmoke; }
+                        &:nth-child(even) { background: gainsboro; }
+                        padding: 5px 10px 5px 10px;
+                        font-size: 12pt;
+                    }
                 }
             }
         }
-    }
-
-    #record-head {
-        pointer-events: auto !important;
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
     
-        &.record {
+        #record-head {
+            pointer-events: auto !important;
+            position: absolute;
+            top: 540px;
+            left: 340px;
+        
+            &.record {
+                background: red;
+                border: 3px solid maroon;
+            }
+        
+            &.edit {
+                background: limegreen;
+                border: 3px solid green;
+        
+                &.disabled {
+                    background: lightgray;
+                    border: 3px solid gray;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    
+        .circle-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
             background: red;
             border: 3px solid maroon;
-        }
     
-        &.edit {
-            background: limegreen;
-            border: 3px solid green;
-    
-            &.disabled {
-                background: lightgray;
-                border: 3px solid gray;
-                cursor: not-allowed;
+            .icon {
+                color: white;
+                font-size: 25px;
+                &.hidden {
+                    color: transparent;
+                }
             }
         }
-    }
 
-    .circle-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        background: red;
-        border: 3px solid maroon;
-
-        .icon {
-            color: white;
-            font-size: 25px;
-            &.hidden {
-                color: transparent;
-            }
-        }
     }
 }
