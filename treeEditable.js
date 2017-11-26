@@ -7,7 +7,6 @@ var config = {
       ]
   },
   notepad: {
-    HTML: "<textarea id='notepad' rows='50' cols='100'></textarea>",
     content: ""
   },
   pdfviewer: {
@@ -108,14 +107,14 @@ $(function(){
         if (textArea != null) config.notepad.content = textArea.value;
         if (data.node.title == 'PAPER_TITLES.txt') {
           console.log("Open Notepad!");
-          html = "<textarea id='notepad' rows='50' cols='100'>" + config.notepad.content + "</textarea>";
+          html = "<textarea id='notepad' style='height:100%;width:100%'>" + config.notepad.content + "</textarea>";
           w2ui.myLayout.set('main',{title:"Notepad"});
           w2ui.myLayout.content('main', html);
         } else if (data.node.title.indexOf(".pdf") !== -1) {
           console.log("Opening PDF!");
           w2ui.myLayout.set('main',{title:"PDF Viewer"});
           // Get the content to display on the PDF viewer
-          var pdfcontent = "<div id='PDFContent'><object data='data/pdfs/CHI2011/index.html'>Your browser doesn't support object tag :(</object></div>";
+          var pdfcontent = "<div id='PDFContent' style='height:100%'><object style='height:100%;width:100%' data='data/pdfs/CHI2011/index.html'>Your browser doesn't support object tag :(</object></div>";
           w2ui.myLayout.content('main', pdfcontent);
         }
       } 
