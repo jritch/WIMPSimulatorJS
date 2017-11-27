@@ -13,12 +13,13 @@ var config = {
     HTML: "<textarea id='PDFViewer' rows='50' cols='100'></textarea>",
     content: ""
   },
-  
+
 };
 
 $(function(){
   $("#tree").fancytree({
     extensions: ["edit"],
+    selectMode: 2,
     source: [  // Typically we would load using ajax instead...
 
       {title: "TV Shows", folder: true, expanded: true, children: [
@@ -103,7 +104,7 @@ $(function(){
       }
     },
     activate: function(event, data){
-        var textArea = document.getElementById("notepad"); 
+        var textArea = document.getElementById("notepad");
         if (textArea != null) config.notepad.content = textArea.value;
         if (data.node.title == 'PAPER_TITLES.txt') {
           console.log("Open Notepad!");
@@ -117,7 +118,12 @@ $(function(){
           var pdfcontent = "<div id='PDFContent' style='height:100%'><object style='height:100%;width:100%' data='data/pdfs/CHI2011/index.html'>Your browser doesn't support object tag :(</object></div>";
           w2ui.myLayout.content('main', pdfcontent);
         }
-      } 
+      },
+      click: function(e, data) {
+   if( ! data.node.folder ){
+     data.node.toggleSelected();
+   }
+  }
   });
 });
 
