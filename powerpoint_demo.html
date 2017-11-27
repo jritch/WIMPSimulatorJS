@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Powerpoint</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="html2canvas.js"></script>
+    <script type="text/javascript" src="http://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="http://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <style>
+      .MyIcon1 { content:url('ex.gif'); width:100px !important; height:100px;}
+      .ui-front {
+        z-index: 1000;
+      }
+    </style>
+</head>
+<body>
+
+<div id="toolbar" style="width: 100%;"></div>
+<div id="main" style="width: 100%; height: 700px;"></div>
+
+<div id="dialog" title="Insert Image">
+  <p>Select an image in the file explorer to your left then click insert.</p>
+  <button id="insert_button">Insert</button>
+</div>
+</body>
+
+<script type="text/javascript">
+
+// widget configuration
+
+function blur_event (id)   {
+  console.log("???????")
+  slide_information["text"][id] = $("#slide_txt").text();
+}
+
+ var slide_information = {
+     text:[],
+     image_titles:[]
+   }
+
+var ppt_config = {
+    layout: {
+        name: 'layout',
+        padding: 0,
+        panels: [
+            { type: 'left', size: 200, resizable: false, minSize: 120, title: 'Slides'  },
+            { type: 'main', minSize: 550, overflow: 'hidden' }
+        ]
+    },
+    sidebar: {
+        name: 'sidebar',
+        nodes: [
+                { id: '1', text: 'Slide 1', img: 'MyIcon1', selected: true },
+        ],
+
+        onLoad: function (event) {sidebar.onClick(event);},
+
+        onClick: function (event) {
+            if (event) {
+                var id = Number(event.target) - 1;
+            }
+            else {
+              var id = 0;
+            }
+
+            w2ui.layout.content('main', '<div style="width:80%;padding:20px;height:80%; margin: auto; background-color:white">'+
+              '<div style="padding: 10px;border: 1px; border-style:dashed" onblur="blur_event('+String(id)+ ')" contenteditable="true">'
+              + "<span id=slide_txt>Edit to Insert Text.</span>" +  '</div><br><div onclick="$(\'#dialog\' ).dialog( \'open\' );" style="padding: 10px; border: 1px; border-style:dashed;height:90%">'
+              + "<span id='prompt'>Click to Insert Image.</span>" +'<br><img style="margin:auto;" id="active_img"></div></div>'
+            );
+
+            $(w2ui.layout.el('main'))
+                .css({
+                    'border-left': '1px solid silver',
+                    'padding ': '100px'
+                });
+
+            if (event){
+
+              // show an image if it's been added
+              if (slide_information["image_titles"].length > id){
+                //console.log("YEAH WE IN THIS CASE BOY")
+                $("#active_img").attr("src",slide_information["image_titles"][id]);
+                $("#prompt").remove();
+              }
+
+              // Show the correct text if it's been added
+              if (slide_information["text"].length > id){
+                $("#slide_txt").text(slide_information["text"][id]);
+              }
+
+              
+
+            }
+        }
+    },
+
+};
+
+var toolbar = {
+  name: 'toolbar',
+  items : [
+    {type:'button', caption: 'Insert Slide', img: 'icon-folder'}
+  ],
+  onClick: function(event) {
+    num = String(w2ui["sidebar"].nodes.length + 1)
+    w2ui['sidebar'].add({ id: num, text: 'Slide '+ num, img: 'MyIcon1', })
+  }
+};
+
+
+$(function () {
+    // initialization
+    $('#main').w2layout(ppt_config.layout);
+    w2ui.layout.content('left', $().w2sidebar(ppt_config.sidebar));
+    // in memory initialization
+    $().w2grid(ppt_config.grid2);
+
+    $('#toolbar').w2toolbar(toolbar);
+    $( "#dialog" ).dialog({
+      autoOpen: false,
+      show: {
+        effect: "blind",
+        duration: 100
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
+    });
+    w2ui["sidebar"].on('render',function(event){
+
+      ppt_config.sidebar.onClick();})
+    w2ui["sidebar"].on("refresh", function(event){
+      $(".hack").remove();
+      $(".MyIcon1").after("<br class='hack' clear=all>");
+    })
+});
+
+$( function() {
+
+  $('#insert_button').on("click", function () {
+    $("#dialog").dialog("close");
+    $("#active_img").attr("src","ex.gif");
+    $("#prompt").remove();
+    id = Number(w2ui['sidebar'].selected)-1;
+    //TODO: change this to the correct image title
+    slide_information["image_titles"][id] = "ex.gif"
+  });
+
+});
+
+
+</script>
+
+
+</html>

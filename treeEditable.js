@@ -1,6 +1,25 @@
+var config = {
+  layout: {
+      name: 'myLayout',
+      padding: 0,
+      panels: [
+          { type: 'main', minSize: 550, overflow: 'hidden', title: '' }
+      ]
+  },
+  notepad: {
+    content: ""
+  },
+  pdfviewer: {
+    HTML: "<textarea id='PDFViewer' rows='50' cols='100'></textarea>",
+    content: ""
+  },
+
+};
+
 $(function(){
   $("#tree").fancytree({
     extensions: ["edit"],
+    selectMode: 2,
     source: [  // Typically we would load using ajax instead...
 
       {title: "TV Shows", folder: true, expanded: true, children: [
@@ -85,12 +104,30 @@ $(function(){
       }
     },
     activate: function(event, data){
-        // $("#statusLine").text(event.type + ": " + data.node);
-        console.log(event.type + ": " + data.node);
+        var textArea = document.getElementById("notepad");
+        if (textArea != null) config.notepad.content = textArea.value;
         if (data.node.title == 'PAPER_TITLES.txt') {
-            console.log("Open Notepad!");
+          console.log("Open Notepad!");
+          html = "<textarea id='notepad' style='height:100%;width:100%'>" + config.notepad.content + "</textarea>";
+          w2ui.myLayout.set('main',{title:"Notepad"});
+          w2ui.myLayout.content('main', html);
+        } else if (data.node.title.indexOf(".pdf") !== -1) {
+          console.log("Opening PDF!");
+          w2ui.myLayout.set('main',{title:"PDF Viewer"});
+          // Get the content to display on the PDF viewer
+          var pdfcontent = "<div id='PDFContent' style='height:100%'><object style='height:100%;width:100%' data='data/pdfs/CHI2011/index.html'>Your browser doesn't support object tag :(</object></div>";
+          w2ui.myLayout.content('main', pdfcontent);
         }
-
       },
+      click: function(e, data) {
+   if( ! data.node.folder ){
+     data.node.toggleSelected();
+   }
+  }
   });
+});
+
+$(function () {
+  $('#myApps').w2layout(config.layout);
+  w2ui.myLayout.content('main', "");
 });
