@@ -1,4 +1,18 @@
 $(function(){
+
+    class Action {
+        constructor(name, icon, list) {
+            this.name = name;
+            this.icon = icon;
+            this.list = list;
+        }
+    }
+    let actionList = [
+        new Action('Test Action 1', 'copy'),
+        new Action('Test Action 2', 'paste'),
+        new Action('Test Action 3', 'file-excel-o'),
+    ];
+
     let aure = $('#aure');
     let recordHead = $('#record-head')
 
@@ -10,13 +24,13 @@ $(function(){
     var currState = State.IDLE;
 
     function setState(s) {
-        currState = s;
-        if (currState == State.IDLE) {
+        if (s == State.IDLE) {
+            actionList = [];
             aure.find('#aure-action-editor').addClass('small')
             recordHead.find('.icon').addClass('hidden');
             recordHead.removeClass('edit').addClass('record');
         }
-        else if (currState == State.RECORD) {
+        else if (s == State.RECORD) {
             recordHead.find('.icon').addClass('hidden');
             recordHead.find('.fa-stop').removeClass('hidden');
         }
@@ -26,6 +40,22 @@ $(function(){
             recordHead.find('.icon').addClass('hidden');
             recordHead.find('.fa-play').removeClass('hidden');
         }
+        currState = s;
+    }
+
+    function buildActionList(as) {
+        let $el = as.reduce((acc, a) => {
+            $a = $(document.createElement('div')).addClass('aure-action');
+            console.log($a);
+            $a.append($('<div>', { class: 'aure-action-icon icon' })
+                .append($('<i>', { class: `fa fa-${a.icon}` })));
+            $a.append($('<div>').append($('<p>').text(a.name)));
+            console.log($a.html());
+            acc.append($a);
+            return acc;
+        }, $('<div>', { id: 'aure-actions' }));
+        // console.log($el.html());
+        $('#aure-actions').replaceWith($el);
     }
 
     aure.draggable({handle: '.handle'});
@@ -42,6 +72,7 @@ $(function(){
         }
     })
     aure.find('#aure-cancel').click(function(e) { setState(State.IDLE) })
+    aure.find('#aure-save').click(e => buildActionList(actionList));
 
     $('#aure-list-items').sortable();
     $('#aure-list-items').disableSelection();
