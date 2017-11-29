@@ -9,7 +9,8 @@
   <link rel="stylesheet" href="http://w2ui.com/src/w2ui-1.4.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mar10/fancytree@v2/dist/skin-win8/ui.fancytree.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-  
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
   <link href="tree.css" rel="stylesheet" />
   <link href="aure.css" rel="stylesheet" />
 
@@ -21,6 +22,15 @@
 
   <script src="treeEditable.js"></script>
   <script type="text/javascript" src="aure.js"></script>
+<!--  <script type="text/javascript" src="powerpoint.js"></script> -->
+
+  <style>
+    .MyIcon1 { content:url('ex.gif'); width:100px !important; height:100px;}
+    .ui-front {
+      z-index: 1000;
+    }
+  </style>
+
 
 </head>
 <body>
@@ -31,6 +41,22 @@
         <div class="col-sm-8">
             <div id="myApps" style="height: 700px"></div>
         </div>
+    </div>
+
+<!--    <div class="row">
+        <div class="col-sm-12">
+            <div id="toolbar"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="main" style="height: 700px"></div>
+        </div>
+    </div>-->
+
+    <div id="dialog" title="Insert Image">
+      <p>Select an image in the file explorer to your left then click insert.</p>
+      <button id="insert_button">Insert</button>
     </div>
 
     <div id="aure">
@@ -123,6 +149,6 @@
             </div>
         </div>
     </div>
-    
+
 </body>
 </html>

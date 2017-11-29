@@ -1,3 +1,82 @@
+
+function blur_event (id)   {
+  console.log("???????")
+  slide_information["text"][id] = $("#slide_txt").text();
+}
+
+ var slide_information = {
+     text:[],
+     image_titles:[]
+   }
+
+var ppt_config = {
+    layout: {
+        name: 'layout',
+        padding: 0,
+        panels: [
+            { type: 'left', size: 200, resizable: false, minSize: 120, title: 'Slides'  },
+            { type: 'main', minSize: 550, overflow: 'hidden' }
+        ]
+    },
+    sidebar: {
+        name: 'sidebar',
+        nodes: [
+                { id: '1', text: 'Slide 1', img: 'MyIcon1', selected: true },
+        ],
+
+        onLoad: function (event) {sidebar.onClick(event);},
+
+        onClick: function (event) {
+            if (event) {
+                var id = Number(event.target) - 1;
+            }
+            else {
+              var id = 0;
+            }
+
+            w2ui.layout.content('main', '<div style="width:80%;padding:20px;height:80%; margin: auto; background-color:white">'+
+              '<div style="padding: 10px;border: 1px; border-style:dashed" onblur="blur_event('+String(id)+ ')" contenteditable="true">'
+              + "<span id=slide_txt>Edit to Insert Text.</span>" +  '</div><br><div onclick="$(\'#dialog\' ).dialog( \'open\' );" style="padding: 10px; border: 1px; border-style:dashed;height:90%">'
+              + "<span id='prompt'>Click to Insert Image.</span>" +'<br><img style="margin:auto;" id="active_img"></div></div>'
+            );
+
+            $(w2ui.layout.el('main'))
+                .css({
+                    'border-left': '1px solid silver',
+                    'padding ': '100px'
+                });
+
+            if (event){
+
+              // show an image if it's been added
+              if (slide_information["image_titles"].length > id){
+                //console.log("YEAH WE IN THIS CASE BOY")
+                $("#active_img").attr("src",slide_information["image_titles"][id]);
+                $("#prompt").remove();
+              }
+
+              // Show the correct text if it's been added
+              if (slide_information["text"].length > id){
+                $("#slide_txt").text(slide_information["text"][id]);
+              }
+
+            }
+        }
+    },
+
+};
+
+var toolbar = {
+  name: 'toolbar',
+  items : [
+    {type:'button', caption: 'Insert Slide', img: 'icon-folder'}
+  ],
+  onClick: function(event) {
+    num = String(w2ui["sidebar"].nodes.length + 1)
+    w2ui['sidebar'].add({ id: num, text: 'Slide '+ num, img: 'MyIcon1', })
+  }
+};
+
 var config = {
   layout: {
       name: 'myLayout',
@@ -41,6 +120,7 @@ $(function(){
         {title: "W10-Lazar-2.pdf"},
       ]},
       {title: "Screenshots", folder: true, children: [
+        {title: "SCREENSHOTS.ppt"},
         {title: "1.png"},
         {title: "2.png"},
         {title: "3.png"},
@@ -85,12 +165,12 @@ $(function(){
         // Save data.input.val() or return false to keep editor open
         console.log("save...", this, data);
         // Simulate to start a slow ajax request...
-        setTimeout(function(){
-          $(data.node.span).removeClass("pending");
+        //setTimeout(function(){
+          //$(data.node.span).removeClass("pending");
           // Let's pretend the server returned a slightly modified
           // title:
-          data.node.setTitle(data.node.title + "!");
-        }, 2000);
+          //data.node.setTitle(data.node.title + "!");
+        //}, 2000);
         // We return true, so ext-edit will set the current user input
         // as title
         return true;
@@ -107,11 +187,64 @@ $(function(){
         var textArea = document.getElementById("notepad");
         if (textArea != null) config.notepad.content = textArea.value;
         if (data.node.title == 'PAPER_TITLES.txt') {
+          if(w2ui['layout']) {
+            w2ui['layout'].destroy();
+            w2ui['sidebar'].destroy();
+            w2ui['toolbar'].destroy();
+          }
           console.log("Open Notepad!");
           html = "<textarea id='notepad' style='height:100%;width:100%'>" + config.notepad.content + "</textarea>";
           w2ui.myLayout.set('main',{title:"Notepad"});
           w2ui.myLayout.content('main', html);
-        } else if (data.node.title.indexOf(".pdf") !== -1) {
+        }
+        else if (data.node.title == "SCREENSHOTS.ppt"){
+          console.log("Open Powerpoint!");
+          html = '<div class="row"><div class="col-sm-12"><div id="toolbar"></div></div></div><div class="row"><div class="col-sm-12"><div id="main" style="height: 700px"></div></div></div>';
+          w2ui.myLayout.set('main',{title:"Screenshots"});
+          w2ui.myLayout.content('main', html);
+
+                    $('#main').w2layout(ppt_config.layout);
+                    w2ui.layout.content('left', $().w2sidebar(ppt_config.sidebar));
+                    // in memory initialization
+                    $().w2grid(ppt_config.grid2);
+
+                    $('#toolbar').w2toolbar(toolbar);
+                    $( "#dialog" ).dialog({
+                      autoOpen: false,
+                      show: {
+                        effect: "blind",
+                        duration: 100
+                      },
+                      hide: {
+                        effect: "explode",
+                        duration: 1000
+                      }
+                    });
+                    w2ui["sidebar"].on('render',function(event){
+
+                      ppt_config.sidebar.onClick();})
+                    w2ui["sidebar"].on("refresh", function(event){
+                      $(".hack").remove();
+                      $(".MyIcon1").after("<br class='hack' clear=all>");
+                    })
+
+                    $('#insert_button').on("click", function () {
+                      $("#dialog").dialog("close");
+                      $("#active_img").attr("src","ex.gif");
+                      $("#prompt").remove();
+                      id = Number(w2ui['sidebar'].selected)-1;
+                      //TODO: change this to the correct image title
+                      slide_information["image_titles"][id] = "ex.gif"
+                    });
+
+
+        }
+         else if (data.node.title.indexOf(".pdf") !== -1) {
+          if(w2ui['layout']) {
+            w2ui['layout'].destroy();
+            w2ui['sidebar'].destroy();
+            w2ui['toolbar'].destroy();
+          }
           console.log("Opening PDF!");
           w2ui.myLayout.set('main',{title:"PDF Viewer"});
           // Get the content to display on the PDF viewer
