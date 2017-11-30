@@ -1,3 +1,5 @@
+jQuery = $;
+
 $(function(){
 
     class Action {
@@ -72,7 +74,15 @@ $(function(){
         }
     })
     aure.find('#aure-cancel').click(function(e) { setState(State.IDLE) })
-    aure.find('#aure-save').click(e => buildActionList(actionList));
+    aure.find('#aure-save').click(e => {
+        $('#t1_1').on('copy', () => {console.log('copy')})
+        // buildActionList(actionList);
+    });
+    aure.find('.aure-add-list i').click(e => {
+        // buildFileList()
+        aure.find('#aure-list').toggleClass('visible')
+    })
+    
 
     $('#aure-list-items').sortable();
     $('#aure-list-items').disableSelection();

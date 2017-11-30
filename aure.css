@@ -58,8 +58,9 @@
                 margin-right: 20px; }
               #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .icon.aure-add-list {
                 margin-left: auto;
-                display: none;
-                cursor: pointer; }
+                display: none; }
+                #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .icon.aure-add-list i {
+                  cursor: pointer; }
             #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action.listable > .aure-add-list {
               display: block; }
         #aure #aure-container #aure-action-editor #aure-editor #aure-buttons {

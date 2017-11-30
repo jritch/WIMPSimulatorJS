@@ -78,7 +78,9 @@
                             &.aure-add-list {
                                 margin-left: auto;
                                 display: none;
-                                cursor: pointer;
+                                i {
+                                    cursor: pointer;
+                                }
                             }
                         }
 
