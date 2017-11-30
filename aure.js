@@ -13,9 +13,6 @@ let actionList = [
     new Action('Test Action 3', 'file-excel-o'),
 ];
 
-let aure = $('#aure');
-let recordHead = $('#record-head')
-
 let State = {
     IDLE: 0,
     RECORD: 1,
@@ -23,7 +20,7 @@ let State = {
 };
 var currState = State.IDLE;
 
-function setState(s) {
+function setState(s, aure, recordHead) {
     if (s == State.IDLE) {
         actionList = [];
         aure.find('#aure-action-editor').addClass('small')
@@ -46,36 +43,36 @@ function setState(s) {
 function buildActionList(as) {
     let $el = as.reduce((acc, a) => {
         $a = $(document.createElement('div')).addClass('aure-action');
-        console.log($a);
         $a.append($('<div>', { class: 'aure-action-icon icon' })
             .append($('<i>', { class: `fa fa-${a.icon}` })));
         $a.append($('<div>').append($('<p>').text(a.name)));
-        console.log($a.html());
         acc.append($a);
         return acc;
     }, $('<div>', { id: 'aure-actions' }));
-    // console.log($el.html());
     $('#aure-actions').replaceWith($el);
 }
 
 $(function(){
+    let aure = $('#aure');
+    let recordHead = $('#record-head')
+
     aure.draggable({handle: '.handle'});
     recordHead.draggable({cancel: '#record-head'})
     .click(function(e) {
         if (currState == State.IDLE) {
-            setState(State.RECORD);
+            setState(State.RECORD, aure, recordHead);
         }
         else if (currState == State.RECORD) {
-            setState(State.EDIT)
+            setState(State.EDIT, aure, recordHead)
         }
         else if (currState == State.EDIT && !recordHead.hasClass('disabled')) {
-            setState(State.IDLE);
+            setState(State.IDLE, aure, recordHead);
         }
     })
-    aure.find('#aure-cancel').click(function(e) { setState(State.IDLE) })
+    aure.find('#aure-cancel').click(function(e) { setState(State.IDLE, aure, recordHead) })
     aure.find('#aure-save').click(e => {
-        $('#t1_1').on('copy', () => {console.log('copy')})
-        // buildActionList(actionList);
+        // $('#t1_1').on('copy', () => {console.log('copy')})
+        buildActionList(actionList);
     });
     aure.find('.aure-add-list i').click(e => {
         // buildFileList()
