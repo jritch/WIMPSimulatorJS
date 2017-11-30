@@ -1,65 +1,64 @@
 jQuery = $;
 
+class Action {
+    constructor(name, icon, list) {
+        this.name = name;
+        this.icon = icon;
+        this.list = list;
+    }
+}
+let actionList = [
+    new Action('Test Action 1', 'copy'),
+    new Action('Test Action 2', 'paste'),
+    new Action('Test Action 3', 'file-excel-o'),
+];
+
+let aure = $('#aure');
+let recordHead = $('#record-head')
+
+let State = {
+    IDLE: 0,
+    RECORD: 1,
+    EDIT: 2,
+};
+var currState = State.IDLE;
+
+function setState(s) {
+    if (s == State.IDLE) {
+        actionList = [];
+        aure.find('#aure-action-editor').addClass('small')
+        recordHead.find('.icon').addClass('hidden');
+        recordHead.removeClass('edit').addClass('record');
+    }
+    else if (s == State.RECORD) {
+        recordHead.find('.icon').addClass('hidden');
+        recordHead.find('.fa-stop').removeClass('hidden');
+    }
+    else {
+        aure.find('#aure-action-editor').removeClass('small')
+        recordHead.removeClass('record').addClass('edit');
+        recordHead.find('.icon').addClass('hidden');
+        recordHead.find('.fa-play').removeClass('hidden');
+    }
+    currState = s;
+}
+
+function buildActionList(as) {
+    let $el = as.reduce((acc, a) => {
+        $a = $(document.createElement('div')).addClass('aure-action');
+        console.log($a);
+        $a.append($('<div>', { class: 'aure-action-icon icon' })
+            .append($('<i>', { class: `fa fa-${a.icon}` })));
+        $a.append($('<div>').append($('<p>').text(a.name)));
+        console.log($a.html());
+        acc.append($a);
+        return acc;
+    }, $('<div>', { id: 'aure-actions' }));
+    // console.log($el.html());
+    $('#aure-actions').replaceWith($el);
+}
+
 $(function(){
-
-    class Action {
-        constructor(name, icon, list) {
-            this.name = name;
-            this.icon = icon;
-            this.list = list;
-        }
-    }
-    let actionList = [
-        new Action('Test Action 1', 'copy'),
-        new Action('Test Action 2', 'paste'),
-        new Action('Test Action 3', 'file-excel-o'),
-    ];
-
-    let aure = $('#aure');
-    let recordHead = $('#record-head')
-
-    let State = {
-        IDLE: 0,
-        RECORD: 1,
-        EDIT: 2,
-    };
-    var currState = State.IDLE;
-
-    function setState(s) {
-        if (s == State.IDLE) {
-            actionList = [];
-            aure.find('#aure-action-editor').addClass('small')
-            recordHead.find('.icon').addClass('hidden');
-            recordHead.removeClass('edit').addClass('record');
-        }
-        else if (s == State.RECORD) {
-            recordHead.find('.icon').addClass('hidden');
-            recordHead.find('.fa-stop').removeClass('hidden');
-        }
-        else {
-            aure.find('#aure-action-editor').removeClass('small')
-            recordHead.removeClass('record').addClass('edit');
-            recordHead.find('.icon').addClass('hidden');
-            recordHead.find('.fa-play').removeClass('hidden');
-        }
-        currState = s;
-    }
-
-    function buildActionList(as) {
-        let $el = as.reduce((acc, a) => {
-            $a = $(document.createElement('div')).addClass('aure-action');
-            console.log($a);
-            $a.append($('<div>', { class: 'aure-action-icon icon' })
-                .append($('<i>', { class: `fa fa-${a.icon}` })));
-            $a.append($('<div>').append($('<p>').text(a.name)));
-            console.log($a.html());
-            acc.append($a);
-            return acc;
-        }, $('<div>', { id: 'aure-actions' }));
-        // console.log($el.html());
-        $('#aure-actions').replaceWith($el);
-    }
-
     aure.draggable({handle: '.handle'});
     recordHead.draggable({cancel: '#record-head'})
     .click(function(e) {
@@ -82,8 +81,6 @@ $(function(){
         // buildFileList()
         aure.find('#aure-list').toggleClass('visible')
     })
-    
-
     $('#aure-list-items').sortable();
     $('#aure-list-items').disableSelection();
     $('#aure-actions').sortable();
