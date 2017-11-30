@@ -209,38 +209,38 @@ $(function(){
           w2ui.myLayout.set('main',{title:"Screenshots"});
           w2ui.myLayout.content('main', html);
 
-                    $('#main').w2layout(ppt_config.layout);
-                    w2ui.layout.content('left', $().w2sidebar(ppt_config.sidebar));
-                    // in memory initialization
-                    $().w2grid(ppt_config.grid2);
+          $('#main').w2layout(ppt_config.layout);
+          w2ui.layout.content('left', $().w2sidebar(ppt_config.sidebar));
+          // in memory initialization
+          $().w2grid(ppt_config.grid2);
 
-                    $('#toolbar').w2toolbar(toolbar);
-                    w2ui["sidebar"].on('render',function(event){
+          $('#toolbar').w2toolbar(toolbar);
+          w2ui["sidebar"].on('render',function(event){
 
-                      ppt_config.sidebar.onClick();})
-                    w2ui["sidebar"].on("refresh", function(event){
-                      $(".hack").remove();
-                      $(".MyIcon1").after("<br class='hack' clear=all>");
+            ppt_config.sidebar.onClick();})
+          w2ui["sidebar"].on("refresh", function(event){
+            $(".hack").remove();
+            $(".MyIcon1").after("<br class='hack' clear=all>");
 
-                    })
+          })
 
-                    $('#insert_button').on("click", function () {
-                      $("#dialog").dialog("close");
-                      $("#prompt").remove();
-                      id = Number(w2ui['sidebar'].selected)-1;
-                      //TODO: change this to the correct image title
-                      if($("#tree").fancytree("getActiveNode")) {
-                        slide_information["image_titles"][id]  = $("#tree").fancytree("getActiveNode").title
-                      }
-                      else {
-                        slide_information["image_titles"][id] = "ex.gif"
-                      }
-                      $("#active_img").attr("src",slide_information["image_titles"][id])
+          $('#insert_button').on("click", function () {
+            $("#dialog").dialog("close");
+            $("#prompt").remove();
+            id = Number(w2ui['sidebar'].selected)-1;
+            //TODO: change this to the correct image title
+            if($("#tree").fancytree("getActiveNode")) {
+              slide_information["image_titles"][id]  = $("#tree").fancytree("getActiveNode").title
+            }
+            else {
+              slide_information["image_titles"][id] = "ex.gif"
+            }
+            $("#active_img").attr("src",slide_information["image_titles"][id])
 
-                      // #TODO: Add to action list an insert action
-                      a = new Action('Insert a slide image', 'paperclip');
-                      actionList.push(a)
-                    });
+            // #TODO: Add to action list an insert action
+            a = new Action('Insert a slide image', 'paperclip');
+            actionList.push(a)
+          });
 
 
         }
