@@ -2,6 +2,10 @@
 function blur_event (id)   {
   console.log("???????")
   slide_information["text"][id] = $("#slide_txt").text();
+  // TODO: Add to action list an append text action
+  // #TODO: Add to action list an insert action
+  a = new Action('Add slide text', 'font');
+  actionList.push(a)
 }
 
  var slide_information = {
@@ -74,6 +78,8 @@ var toolbar = {
   onClick: function(event) {
     num = String(w2ui["sidebar"].nodes.length + 1)
     w2ui['sidebar'].add({ id: num, text: 'Slide '+ num, img: 'MyIcon1', })
+    a = new Action('Insert a slide', 'copy');
+    actionList.push(a);
   }
 };
 
@@ -209,32 +215,31 @@ $(function(){
                     $().w2grid(ppt_config.grid2);
 
                     $('#toolbar').w2toolbar(toolbar);
-                    $( "#dialog" ).dialog({
-                      autoOpen: false,
-                      show: {
-                        effect: "blind",
-                        duration: 100
-                      },
-                      hide: {
-                        effect: "explode",
-                        duration: 1000
-                      }
-                    });
                     w2ui["sidebar"].on('render',function(event){
 
                       ppt_config.sidebar.onClick();})
                     w2ui["sidebar"].on("refresh", function(event){
                       $(".hack").remove();
                       $(".MyIcon1").after("<br class='hack' clear=all>");
+
                     })
 
                     $('#insert_button').on("click", function () {
                       $("#dialog").dialog("close");
-                      $("#active_img").attr("src","ex.gif");
                       $("#prompt").remove();
                       id = Number(w2ui['sidebar'].selected)-1;
                       //TODO: change this to the correct image title
-                      slide_information["image_titles"][id] = "ex.gif"
+                      if($("#tree").fancytree("getActiveNode")) {
+                        slide_information["image_titles"][id]  = $("#tree").fancytree("getActiveNode").title
+                      }
+                      else {
+                        slide_information["image_titles"][id] = "ex.gif"
+                      }
+                      $("#active_img").attr("src",slide_information["image_titles"][id])
+
+                      // #TODO: Add to action list an insert action
+                      a = new Action('Insert a slide image', 'paperclip');
+                      actionList.push(a)
                     });
 
 
@@ -263,4 +268,18 @@ $(function(){
 $(function () {
   $('#myApps').w2layout(config.layout);
   w2ui.myLayout.content('main', "");
+});
+
+$(function() {
+  $( "#dialog" ).dialog({
+    autoOpen: false,
+    show: {
+      effect: "blind",
+      duration: 100
+    },
+    hide: {
+      effect: "explode",
+      duration: 1000
+    }
+  });
 });
