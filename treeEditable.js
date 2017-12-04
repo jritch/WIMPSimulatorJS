@@ -1,6 +1,6 @@
  var slide_information = {
-	text:[],
-	image_titles:[]
+	text: {},
+	image_titles: {}
 }
 
 function pressDown() {
@@ -31,7 +31,7 @@ var ppt_config = {
 				var id = Number(event.target) - 1;
 			}
 			else {
-				var id = 0;
+				var id = +w2ui.sidebar.selected - 1;
 			}
 
 			w2ui.layout.content('main', `
@@ -68,22 +68,18 @@ var ppt_config = {
 			})
 			$('.ppt-image').click(e => $('#dialog').dialog('open'));
 
-			if (event) {
-				// show an image if it's been added
-				if (slide_information['image_titles'].length > id){
-					$('#active_img').attr('src','data/img/' + slide_information['image_titles'][id]);
-					$('#prompt').remove();
-				}
+			// show an image if it's been added
 
-				// Show the correct text if it's been added
-				if (slide_information['text'].length > id) {
-					$('#slide_txt').text(slide_information['text'][id]);
-				}
+			if (slide_information.image_titles[id]){
+				$('#active_img').attr('src','data/img/' + slide_information['image_titles'][id]);
+				$('#prompt').remove();
+			}
+
+			// Show the correct text if it's been added
+			if (slide_information.text[id]) {
+				$('#slide_txt').text(slide_information['text'][id]);
 			}
 		},
-		// keydown: function(e) {
-		// 	console.log('Keydown event');
-		// }
 	},
 };
 

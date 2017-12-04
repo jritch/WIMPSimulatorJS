@@ -136,7 +136,7 @@ class Aure {
             $el.click(e => {
                 $('#dialog2').dialog('open')
                 $('#tree').fancytree({selectMode: 2, checkbox: true})
-                $('#dialog2').find('button').click(e => {
+                $('#dialog2').find('button').off().click(e => {
                     let getName = n =>  n.parent.title == 'root' ? `${n.title}` : getName(n.parent) + `/${n.title}`;
                     a.list = $('#tree').fancytree('getTree').getSelectedNodes().map(getName);
                     $('#dialog2').dialog('close')
