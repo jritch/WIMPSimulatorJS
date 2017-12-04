@@ -11,20 +11,6 @@ class Action {
         this.id = nActions++;
     }
 }
-let actionList = [
-    new Action({
-        title: 'Test Action 1', 
-        icon: 'copy'
-    }),
-    new Action({
-        title: 'Test Action 1', 
-        icon: 'paste'
-    }),
-    new Action({
-        title: 'Test Action 1', 
-        icon: 'file-excel-o'
-    })
-];
 
 class Aure {
     constructor(args) {
@@ -54,7 +40,6 @@ class Aure {
         })
         this.$aure.find('#aure-cancel').click(e => { this.setState(this.State.IDLE) })
         this.$aure.find('#aure-save').click(e => {
-            // $('#t1_1').on('copy', () => {console.log('copy')})
             this.buildActionList(actionList);
         });
 
@@ -109,8 +94,13 @@ class Aure {
                     <div>
                         <p>${a.title}</p>
                     </div>
-                    <div class="aure-add-list icon">
-                        <i class="fa fa-plus-square"></i>
+                    <div class="aure-action-buttons">
+                        <div class="aure-add-list icon">
+                            <i class="fa fa-plus-square"></i>
+                        </div>
+                        <div class="aure-remove-action icon">
+                            <i class="fa fa-times"></i>
+                        </div>
                     </div>
                 </div>
             `)
@@ -119,14 +109,25 @@ class Aure {
                     this.buildFileList(a)
                 }
                 this.$aure.find('#aure-list').toggleClass('visible')
-            })
+            });
+            $a.find('.aure-remove-action').click(e => {
+                let i = this.actionList.indexOf(a);
+                if (i > -1) {
+                    this.actionList.splice(i, 1);
+                    this.buildActionList(this.actionList);
+                }
+            });
             acc.append($a);
             return acc;
         }, $('<div>', { id: 'aure-actions' }));
-        $el.find('#aure-list-items').sortable();
-        $el.find('#aure-list-items').disableSelection();
-        $el.find('#aure-actions').sortable();
-        $el.find('#aure-actions').disableSelection();
+        $el.sortable({
+            update: (e, ui) => {
+                this.actionList = this.$aure.find('.aure-action')
+                    .map((i, el) => +$(el).attr('id').split('-')[2])
+                    .map((i, n) => this.actionList[n])
+                    .toArray();
+            }
+        }).disableSelection();
         $('#aure-actions').replaceWith($el);
     }
     buildFileList(a) {
@@ -161,6 +162,40 @@ class Aure {
             this.$recordHead.addClass('flash');
             setTimeout(() => this.$recordHead.removeClass('flash'), 250)
         }
+    }
+    replay() {
+        let nFiles = this.actionList.find(a => a.list != undefined).list.length;
+        // TODO: iterate over file list
+        [...Array(nFiles).keys()].forEach(f => {
+            this.actionList.forEach((a, i) => {
+                console.log(a);
+                if (a.type == 'ppt-insert-slide') {
+                    console.log('ppt-insert-slide');
+                    w2ui.toolbar.onClick();
+                }
+                if (a.type == 'keydown') {
+                    console.log('keydown', a.data);
+                    let ev = $.Event('keydown')
+                    ev.keyCode = a.data
+                    $(document).trigger(ev)
+                }
+                if (a.type == 'ppt-insert-text') {
+                    console.log('ppt-insert-text');
+                    console.log('selected slide:', +w2ui.sidebar.selected - 1);
+                    console.log('text:', a.data.text);
+                    slide_information.text[+w2ui.sidebar.selected - 1] = a.data.text;
+                    w2ui.sidebar.onClick();
+                }
+                if (a.type == 'ppt-insert-image') {
+                    console.log('ppt-insert-image');
+                    console.log('selected slide:', +w2ui.sidebar.selected - 1);
+                    console.log('text:', a.data.text);
+                    let fileName = a.list[f].split('/').pop()
+                    slide_information.image_titles[+w2ui.sidebar.selected - 1] = fileName
+                    w2ui.sidebar.onClick();
+                }
+            });
+        });
     }
 }
 

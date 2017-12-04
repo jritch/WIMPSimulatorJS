@@ -65,7 +65,7 @@
                         p {
                             margin: 0;
                         }
-                        
+
                         .icon {
                             width: 25px;
                             i {
@@ -75,16 +75,22 @@
                             &.aure-action-icon {
                                 margin-right: 20px;
                             }
-                            &.aure-add-list {
-                                margin-left: auto;
-                                display: none;
-                                i {
-                                    cursor: pointer;
-                                }
-                            }
                         }
 
-                        &.listable > .aure-add-list {
+                        .aure-action-buttons{
+                            display: flex;
+                            flex-direction: row;
+                            margin-left: auto;
+                            .icon i {
+                                cursor: pointer;
+                            }
+                            .aure-add-list {
+                                display: none;
+                            }
+                        }
+                        
+
+                        &.listable .aure-add-list {
                             display: block;
                         }
                     }

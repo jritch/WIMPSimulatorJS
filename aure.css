@@ -56,12 +56,15 @@
                 margin-top: 3px; }
               #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .icon.aure-action-icon {
                 margin-right: 20px; }
-              #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .icon.aure-add-list {
-                margin-left: auto;
+            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .aure-action-buttons {
+              display: flex;
+              flex-direction: row;
+              margin-left: auto; }
+              #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .aure-action-buttons .icon i {
+                cursor: pointer; }
+              #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .aure-action-buttons .aure-add-list {
                 display: none; }
-                #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action .icon.aure-add-list i {
-                  cursor: pointer; }
-            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action.listable > .aure-add-list {
+            #aure #aure-container #aure-action-editor #aure-editor #aure-actions .aure-action.listable .aure-add-list {
               display: block; }
         #aure #aure-container #aure-action-editor #aure-editor #aure-buttons {
           margin-top: auto;
