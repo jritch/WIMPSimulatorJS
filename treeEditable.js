@@ -3,6 +3,13 @@
 	image_titles:[]
 }
 
+function pressDown() {
+	$('.w2ui-node w2ui-selected').click().focus().mousedown().mouseup().trigger();
+	let ke = $.Event('keydown')
+	ke.keyCode = 40;
+	$(document).trigger(ke)
+}
+
 var ppt_config = {
 	layout: {
 		name: 'layout',
@@ -14,10 +21,11 @@ var ppt_config = {
 	},
 	sidebar: {
 		name: 'sidebar',
+		keyboard: false,
 		nodes: [
 			{ id: '1', text: 'Slide 1', img: 'MyIcon1', selected: true },
 		],
-		onLoad: function (event) { sidebar.onClick(event); },
+		onRender: function(event) { this.sidebar.onClick(event) },
 		onClick: function (event) {
 			if (event) {
 				var id = Number(event.target) - 1;
@@ -72,7 +80,10 @@ var ppt_config = {
 					$('#slide_txt').text(slide_information['text'][id]);
 				}
 			}
-		}
+		},
+		// keydown: function(e) {
+		// 	console.log('Keydown event');
+		// }
 	},
 };
 
@@ -110,8 +121,9 @@ $(function(){
 	$('#tree').fancytree({
 		extensions: ['edit'],
 		selectMode: 2,
+		checkbox: false,
 		source: [
-			{title: 'TV Shows', folder: true, expanded: true, children: [
+			{title: 'TV Shows', folder: true, children: [
 				{title: 'The.Good.Place.S01E01.HDTV.HebSubs.XviD-AFG.avi', key: 'vlc_1'},
 				{title: 'The.Good.Place.S01E02.1080p.HDTV.x264-CROOKS.mp4', key: 'vlc_2'},
 				{title: 'The.Good.Place.S01E03.HDTV.x264-KILLERS.mp4', key: 'vlc_3'},
@@ -129,7 +141,7 @@ $(function(){
 				{title: 'W10-Lazar-1.pdf'},
 				{title: 'W10-Lazar-2.pdf'},
 			]},
-			{title: 'Screenshots', folder: true, children: [
+			{title: 'Screenshots', folder: true, expanded: true, children: [
 				{title: 'SCREENSHOTS.ppt'},
 				{title: '1.jpg'},
 				{title: '2.jpg'},
@@ -148,7 +160,7 @@ $(function(){
 			]}
 		],
 		edit: {
-			triggerStart: ['f2', 'dblclick', 'shift+click', 'mac+enter']
+			triggerStart: ['f2', 'dblclick', 'mac+enter']
 		},
 		activate: function(event, data) {
 			// save notepad state
@@ -184,8 +196,21 @@ $(function(){
 
 				$('#main').w2layout(ppt_config.layout);
 				w2ui.layout.content('left', $().w2sidebar(ppt_config.sidebar));
-
 				$('#toolbar').w2toolbar(toolbar);
+				$(document).on('keydown', function(e) {
+					if (e.keyCode == 40) {
+						var n = Number(w2ui.sidebar.selected) % Number(w2ui.sidebar.nodes.length) + 1;
+						w2ui.sidebar.select(n.toFixed())
+						w2ui.sidebar.onClick()
+						aure.addAction(new Action({
+							type: 'keydown',
+							data: 40,
+							title: 'Keys: Down',
+							icon: 'keyboard-o',
+						}))
+					}
+				}) 
+
 				w2ui['sidebar'].on('render',function(event) {
 					ppt_config.sidebar.onClick();
 				})
@@ -194,7 +219,6 @@ $(function(){
 					$('#dialog').dialog('close');
 					$('#prompt').remove();
 					id = Number(w2ui['sidebar'].selected)-1;
-					//TODO: change this to the correct image title
 					if($('#tree').fancytree('getActiveNode')) {
 						slide_information['image_titles'][id]	= $('#tree').fancytree('getActiveNode').title
 					}
@@ -202,8 +226,6 @@ $(function(){
 						slide_information['image_titles'][id] = 'ex.gif'
 					}
 					$('#active_img').attr('src','data/img/' + slide_information['image_titles'][id])
-
-					// #TODO: Add to action list an insert action
 					aure.addAction(new Action({
 						type: 'ppt-insert-image',
 						data: {
@@ -214,7 +236,6 @@ $(function(){
 						icon: 'paperclip',
 						list: []
 					}))
-					console.log(aure.actionList);
 				});
 			}
 			else if (data.node.title.indexOf('.pdf') !== -1) {

@@ -1,5 +1,6 @@
 jQuery = $;
 
+let nActions = 0;
 class Action {
     constructor(args) {
         this.title = args.title;
@@ -7,6 +8,7 @@ class Action {
         this.type = args.type;
         this.data = args.data;
         this.list = args.list;
+        this.id = nActions++;
     }
 }
 let actionList = [
@@ -55,10 +57,25 @@ class Aure {
             // $('#t1_1').on('copy', () => {console.log('copy')})
             this.buildActionList(actionList);
         });
+
+        $('#dialog2').dialog({
+            autoOpen: false,
+            show: {
+                effect: 'blind',
+                duration: 100
+            },
+            hide: {
+                effect: 'explode',
+                duration: 1000
+            }
+        });
     }
     setState(s) {
         if (s == this.State.IDLE) {
             this.actionList = [];
+            nActions = 0;
+            this.$aure.find('#aure-list').removeClass('visible')
+
             this.$aure.find('#aure-action-editor').addClass('small')
             this.$recordHead.find('.icon').addClass('hidden');
             this.$recordHead.removeClass('edit')
@@ -85,7 +102,7 @@ class Aure {
                 else return 'listable has-list'
             }
             let $a = $(`
-                <div class="aure-action ${listClasses(a)}">
+                <div id="aure-action-${a.id}" class="aure-action ${listClasses(a)}">
                     <div class="aure-action-icon icon">
                         <i class="fa fa-${a.icon}"></i>
                     </div>
@@ -98,7 +115,9 @@ class Aure {
                 </div>
             `)
             $a.find('.aure-add-list i').click(e => {
-                this.buildFileList(a)
+                if (!this.$aure.find('#aure-list').hasClass('visible')) {
+                    this.buildFileList(a)
+                }
                 this.$aure.find('#aure-list').toggleClass('visible')
             })
             acc.append($a);
@@ -113,12 +132,26 @@ class Aure {
     buildFileList(a) {
         let $el;
         if (a.list == undefined || a.list.length == 0) {
-            $el = $(`<input type="button" class="aure-list-items" class="btn" value="Add files">`)
+            $el = $(`<input type="button" class="aure-list-items aure-add-files" class="btn" value="Add files">`)
+            $el.click(e => {
+                $('#dialog2').dialog('open')
+                $('#tree').fancytree({selectMode: 2, checkbox: true})
+                $('#dialog2').find('button').click(e => {
+                    let getName = n =>  n.parent.title == 'root' ? `${n.title}` : getName(n.parent) + `/${n.title}`;
+                    a.list = $('#tree').fancytree('getTree').getSelectedNodes().map(getName);
+                    $('#dialog2').dialog('close')
+                    this.buildFileList(a)
+                    $('#tree').fancytree({selectMode: 1, checkbox: false})
+                })
+            })
         }
         else {
-            $el = a.list.reduce()
+            $el = a.list.reduce((acc, f) => {
+                acc.append(`<li class="aure-list-item">${f}</li>`)
+                return acc
+            }, $('<ul>', { class: 'aure-list-items' }));
+            this.$aure.find(`#aure-action-${a.id}`).removeClass('needs-list').addClass('has-list')
         }
-        console.log(this.$aure.find('#aure-list'));
         this.$aure.find('.aure-list-items').remove();
         this.$aure.find('#aure-list').append($el);
     }
