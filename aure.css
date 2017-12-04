@@ -106,7 +106,10 @@
       left: 340px; }
       #aure #aure-container #record-head.record {
         background: red;
-        border: 3px solid maroon; }
+        border: 3px solid maroon;
+        transition: box-shadow 0.25s; }
+        #aure #aure-container #record-head.record.flash {
+          box-shadow: 0px 0px 5px 5px red; }
       #aure #aure-container #record-head.edit {
         background: limegreen;
         border: 3px solid green; }

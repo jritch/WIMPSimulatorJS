@@ -20,9 +20,8 @@
   <script src="https://cdn.jsdelivr.net/gh/mar10/fancytree@v2/dist/jquery.fancytree-all-deps.min.js"></script>
   <script type="text/javascript" src="http://w2ui.com/src/w2ui-1.4.min.js"></script>
 
-  <script src="treeEditable.js"></script>
+  <script type="text/javascript" src="treeEditable.js"></script>
   <script type="text/javascript" src="aure.js"></script>
-<!--  <script type="text/javascript" src="powerpoint.js"></script> -->
 
   <style>
     .MyIcon1 { content:url('ex.gif'); width:100px !important; height:100px;}
@@ -43,17 +42,6 @@
         </div>
     </div>
 
-<!--    <div class="row">
-        <div class="col-sm-12">
-            <div id="toolbar"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div id="main" style="height: 700px"></div>
-        </div>
-    </div>-->
-
     <div id="dialog" title="Insert Image">
       <p>Select an image in the file explorer to your left then click insert.</p>
       <button id="insert_button">Insert</button>
@@ -62,77 +50,16 @@
     <div id="aure">
         <div id="aure-container">
             <div id="aure-action-editor" class="small">
-                <div id="aure-list" class="visible">
+                <div id="aure-list" class="">
                     <div class="aure-header">
                         <p>List</p>
                     </div>
-                    <ul id="aure-list-items">
-                        <li class="aure-list-item">1.png</li>
-                        <li class="aure-list-item">2.png</li>
-                        <li class="aure-list-item">3.png</li>
-                    </ul>
                 </div>
                 <div id="aure-editor">
                     <div class="aure-header handle">
                         <p>AuRe</p>
                     </div>
-                    <div id="aure-actions">
-                        <div class="aure-action">
-                            <div class="aure-action-icon icon">
-                                <i class="fa fa-copy"></i>
-                            </div>
-                            <div>
-                                <p>Test Action 1 which has a long name that fills the width of the editor pane</p>
-                            </div>
-                            <div class="aure-add-list icon">
-                                <i class="fa fa-plus-square"></i>
-                            </div>
-                        </div>
-                        <div class="aure-action listable has-list">
-                            <div class="aure-action-icon icon">
-                                <i class="fa fa-paste"></i>
-                            </div>
-                            <div>
-                                <p>Test Action 2 with an approxmately equally long name as the previous action</p>
-                            </div>
-                            <div class="aure-add-list icon">
-                                <i class="fa fa-plus-square"></i>
-                            </div>
-                        </div>
-                        <div class="aure-action listable needs-list">
-                            <div class="aure-action-icon icon">
-                                <i class="fa fa-file-excel-o"></i>
-                            </div>
-                            <div>
-                                <p>Test Action 3 whose name is comparatively short</p>
-                            </div>
-                            <div class="aure-add-list icon">
-                                <i class="fa fa-plus-square"></i>
-                            </div>
-                        </div>
-                        <div class="aure-action">
-                            <div class="aure-action-icon icon">
-                                <i class="fa fa-file-excel-o"></i>
-                            </div>
-                            <div>
-                                <p>Test Action 3 whose name is comparatively short</p>
-                            </div>
-                            <div class="aure-add-list icon">
-                                <i class="fa fa-plus-square"></i>
-                            </div>
-                        </div>
-                        <div class="aure-action">
-                            <div class="aure-action-icon icon">
-                                <i class="fa fa-file-excel-o"></i>
-                            </div>
-                            <div>
-                                <p>Test Action 3 whose name is comparatively short</p>
-                            </div>
-                            <div class="aure-add-list icon">
-                                <i class="fa fa-plus-square"></i>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="aure-actions"></div>
                     <div id="aure-buttons">
                         <div id="aure-cancel" class="circle-button">
                             <i class="fa fa-times icon"></i>
