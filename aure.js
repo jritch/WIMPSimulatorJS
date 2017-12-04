@@ -35,6 +35,7 @@ class Aure {
                 this.setState(this.State.EDIT)
             }
             else if (this.currState == this.State.EDIT && !this.$recordHead.hasClass('disabled')) {
+                this.replay()
                 this.setState(this.State.IDLE);
             }
         })
