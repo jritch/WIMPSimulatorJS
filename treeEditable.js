@@ -127,15 +127,10 @@ $(function(){
 			]},
 			{title: 'CHI Papers', folder: true, children: [
 				{title: 'PAPER_TITLES.txt'},
-				{title: 'p76-wilson.pdf'},
-				{title: 'p255-lobiaonco.pdf'},
-				{title: 'W10-Baecker.pdf'},
-				{title: 'W10-Benjamin.pdf'},
-				{title: 'W10-Consolvo.pdf'},
-				{title: 'W10-Gerling.pdf'},
-				{title: 'W10-Hwang.pdf'},
-				{title: 'W10-Lazar-1.pdf'},
-				{title: 'W10-Lazar-2.pdf'},
+				{title: 'timbermap.pdf'},
+				{title: 'CHI2011.pdf'},
+        {title: 'storyboarding.pdf'},
+        {title: 'UIST2011.pdf'},
 			]},
 			{title: 'Screenshots', folder: true, expanded: true, children: [
 				{title: 'SCREENSHOTS.ppt'},
@@ -242,10 +237,11 @@ $(function(){
 				}
 				console.log('Opening PDF!');
 				w2ui.myLayout.set('main',{title:'PDF Viewer'});
-				// Get the content to display on the PDF viewer
+        // Get the content to display on the PDF viewer
+        var pdfName = data.node.title.slice(0, data.node.title.indexOf('.pdf'));
 				var pdfContent = `
 					<div id="pdf-content" style="height:100%">
-						<object style="height:100%;width:100%" data="data/pdfs/CHI2011/1.html">
+						<object style="height:100%;width:100%" data="data/pdfs/` + pdfName + `/1.html">
 							Your browser doesn't support object tag :(
 						</object>
 					</div>`;
