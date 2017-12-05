@@ -129,8 +129,8 @@ $(function(){
 				{title: 'PAPER_TITLES.txt'},
 				{title: 'timbermap.pdf'},
 				{title: 'CHI2011.pdf'},
-        {title: 'storyboarding.pdf'},
-        {title: 'UIST2011.pdf'},
+				{title: 'storyboarding.pdf'},
+				{title: 'UIST2011.pdf'},
 			]},
 			{title: 'Screenshots', folder: true, expanded: true, children: [
 				{title: 'SCREENSHOTS.ppt'},
@@ -237,14 +237,21 @@ $(function(){
 				}
 				console.log('Opening PDF!');
 				w2ui.myLayout.set('main',{title:'PDF Viewer'});
-        // Get the content to display on the PDF viewer
-        var pdfName = data.node.title.slice(0, data.node.title.indexOf('.pdf'));
-				var pdfContent = `
-					<div id="pdf-content" style="height:100%">
-						<object style="height:100%;width:100%" data="data/pdfs/` + pdfName + `/1.html">
-							Your browser doesn't support object tag :(
-						</object>
-					</div>`;
+        		// Get the content to display on the PDF viewer
+				var pdfName = data.node.title.slice(0, data.node.title.indexOf('.pdf'));
+				var pdfContent = `<div id="pdf-content" style="height:100%; overflow: scroll;"></div>`;
+				$.ajax({ url: `data/pdfs/${pdfName}/1.html`, cache: false })
+				.then(data => {
+					$('#pdf-content').html(data)
+					.on('copy', e => aure.addAction(new Action({
+						type: 'pdf-copy',
+						data: window.getSelection(),
+						title: 'Copy text',
+						icon: 'copy'
+					})))
+				})
+
+
 				w2ui.myLayout.content('main', pdfContent);
 			}
 		},

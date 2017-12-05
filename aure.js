@@ -152,7 +152,15 @@ class Aure {
                 acc.append(`<li class="aure-list-item">${f}</li>`)
                 return acc
             }, $('<ul>', { class: 'aure-list-items' }));
-            this.$aure.find(`#aure-action-${a.id}`).removeClass('needs-list').addClass('has-list')
+            this.$aure.find(`#aure-action-${a.id}`).removeClass('needs-list').addClass('has-list');
+            $el.sortable({
+                update: (e, ui) => {
+                    a.list = $el.find('.aure-list-item')
+                        .map((i, el) => $(el).text())
+                        .toArray();
+                }
+            })
+
         }
         this.$aure.find('.aure-list-items').remove();
         this.$aure.find('#aure-list').append($el);
@@ -169,13 +177,10 @@ class Aure {
         // TODO: iterate over file list
         [...Array(nFiles).keys()].forEach(f => {
             this.actionList.forEach((a, i) => {
-                console.log(a);
                 if (a.type == 'ppt-insert-slide') {
-                    console.log('ppt-insert-slide');
                     w2ui.toolbar.onClick();
                 }
                 if (a.type == 'keydown') {
-                    console.log('keydown', a.data);
                     let ev = $.Event('keydown')
                     ev.keyCode = a.data
                     $(document).trigger(ev)
@@ -188,9 +193,6 @@ class Aure {
                     w2ui.sidebar.onClick();
                 }
                 if (a.type == 'ppt-insert-image') {
-                    console.log('ppt-insert-image');
-                    console.log('selected slide:', +w2ui.sidebar.selected - 1);
-                    console.log('text:', a.data.text);
                     let fileName = a.list[f].split('/').pop()
                     slide_information.image_titles[+w2ui.sidebar.selected - 1] = fileName
                     w2ui.sidebar.onClick();
