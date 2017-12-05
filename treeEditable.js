@@ -3,12 +3,6 @@
 	image_titles: {}
 }
 
-function pressDown() {
-	$('.w2ui-node w2ui-selected').click().focus().mousedown().mouseup().trigger();
-	let ke = $.Event('keydown')
-	ke.keyCode = 40;
-	$(document).trigger(ke)
-}
 
 var ppt_config = {
 	layout: {
@@ -113,6 +107,16 @@ var config = {
 	}
 };
 
+var pdfHtml = {};
+var pdfTitles = ['timbermap', 'CHI2011', 'storyboarding', 'UIST2011'];
+pdfTitles.forEach(t => {
+	let $pdf = $(`<div id="pdf-content" style="height:100%; overflow: scroll;"></div>`);
+	$.ajax({ success: (data => {
+		$pdf.html(data)
+		pdfHtml[t] = $pdf;
+	}), url: `data/pdfs/${t}/1.html`, cache: false, async: true })
+})
+
 $(function(){
 	$('#tree').fancytree({
 		extensions: ['edit'],
@@ -125,7 +129,7 @@ $(function(){
 				{title: 'The.Good.Place.S01E03.HDTV.x264-KILLERS.mp4', key: 'vlc_3'},
 				{title: 'The.Walking.Dead.S08E01.1080p.WEB-DL.DD5.1.H264-RARBG.mp4', key: 'vlc_4'}
 			]},
-			{title: 'CHI Papers', folder: true, children: [
+			{title: 'CHI Papers', folder: true, expanded: true, children: [
 				{title: 'PAPER_TITLES.txt'},
 				{title: 'timbermap.pdf'},
 				{title: 'CHI2011.pdf'},
@@ -154,19 +158,51 @@ $(function(){
 			triggerStart: ['f2', 'dblclick', 'mac+enter']
 		},
 		activate: function(event, data) {
-			// save notepad state
-			config.notepad.content = $('#notepad').length ? $('#notepad').val() : config.notepad.content;
-			
 			if (data.node.title == 'PAPER_TITLES.txt') {
+				let getName = n =>  n.parent.title == 'root' ? `${n.title}` : getName(n.parent) + `/${n.title}`;
+				aure.addAction(new Action({
+					type: 'focus-window',
+					data: {
+						li: data.node.li,
+						path: getName(data.node)
+					},
+					title: `Focus window ${data.node.title}`,
+					icon: 'window-restore',
+					list: []
+				}))
+
 				console.log('Open Notepad!');
 				if(w2ui['layout']) {
 					w2ui['layout'].destroy();
 					w2ui['sidebar'].destroy();
 					w2ui['toolbar'].destroy();
 				}
-				html = `<textarea id="notepad" style="height:100%;width:100%">${config.notepad.content}</textarea>`;
+				html = `<textarea id="notepad" style="height:100%;width:100%"></textarea>`;
 				w2ui.myLayout.set('main',{title:'Notepad'});
 				w2ui.myLayout.content('main', html);
+				$('#notepad').val(config.notepad.content)
+				.on('paste', e => {
+					aure.addAction(new Action({
+						type: 'paste',
+						data: e.target,
+						title: 'Paste text',
+						icon: 'paste'
+					}));
+				}).on('keydown', e => {
+					if (e.keyCode == 13) {
+						aure.addAction(new Action({
+							type: 'keydown',
+							data: {
+								keyCode: 13,
+								target: e.target
+							},
+							title: 'Keys: Enter',
+							icon: 'keyboard-o',
+						}))
+					}
+				}).on('change', e => {
+					config.notepad.content = $('#notepad').val();
+				})
 			}
 			else if (data.node.title == 'SCREENSHOTS.ppt') {
 				console.log('Open Powerpoint!');
@@ -195,7 +231,10 @@ $(function(){
 						w2ui.sidebar.onClick()
 						aure.addAction(new Action({
 							type: 'keydown',
-							data: 40,
+							data: {
+								keyCode: 40,
+								target: document
+							},
 							title: 'Keys: Down',
 							icon: 'keyboard-o',
 						}))
@@ -230,6 +269,13 @@ $(function(){
 				});
 			}
 			else if (data.node.title.indexOf('.pdf') !== -1) {
+				aure.addAction(new Action({
+					type: 'focus-window',
+					data: data.node.li,
+					title: `Focus window ${data.node.title}`,
+					icon: 'window-restore',
+					list: []
+				}))
 				if (w2ui['layout']) {
 					w2ui['layout'].destroy();
 					w2ui['sidebar'].destroy();
@@ -239,20 +285,8 @@ $(function(){
 				w2ui.myLayout.set('main',{title:'PDF Viewer'});
         		// Get the content to display on the PDF viewer
 				var pdfName = data.node.title.slice(0, data.node.title.indexOf('.pdf'));
-				var pdfContent = `<div id="pdf-content" style="height:100%; overflow: scroll;"></div>`;
-				$.ajax({ url: `data/pdfs/${pdfName}/1.html`, cache: false })
-				.then(data => {
-					$('#pdf-content').html(data)
-					.on('copy', e => aure.addAction(new Action({
-						type: 'pdf-copy',
-						data: window.getSelection(),
-						title: 'Copy text',
-						icon: 'copy'
-					})))
-				})
-
-
-				w2ui.myLayout.content('main', pdfContent);
+				var pdfContent = pdfHtml[pdfName];
+				w2ui.myLayout.content('main', pdfContent.html());
 			}
 		},
 		// click: function(e, data) {
@@ -277,4 +311,14 @@ $(function(){
 			duration: 1000
 		}
 	});
+
+	$(document).on('copy', e => aure.addAction(new Action({
+		type: 'copy',
+		data: {
+			sId: '#' + window.getSelection().anchorNode.parentElement.id,
+			eId: '#' + window.getSelection().focusNode.parentElement.id,
+		},
+		title: 'Copy text',
+		icon: 'copy'
+	})))
 });

@@ -23,6 +23,7 @@ class Aure {
         }
         this.currState = this.State.IDLE;
         this.actionList = [];
+        this.copyBuffer = '';
 
         this.$aure.draggable({handle: '.handle'});
         this.$recordHead.draggable({cancel: '#record-head'})
@@ -160,7 +161,6 @@ class Aure {
                         .toArray();
                 }
             })
-
         }
         this.$aure.find('.aure-list-items').remove();
         this.$aure.find('#aure-list').append($el);
@@ -174,16 +174,45 @@ class Aure {
     }
     replay() {
         let nFiles = this.actionList.find(a => a.list != undefined).list.length;
-        // TODO: iterate over file list
         [...Array(nFiles).keys()].forEach(f => {
             this.actionList.forEach((a, i) => {
+                if (a.type == 'focus-window') {
+                    let target;
+                    if (a.list == undefined || a.list.length == 1) {
+                        target = a.data.path;
+                    }
+                    else {
+                        target = a.list[f];
+                    }
+                    let currNode = $('#tree').fancytree('getTree').rootNode;
+                    target.split('/').forEach(p => {
+                        currNode = currNode.children.find(n => n.title == p)
+                        currNode.setExpanded(true);
+                    });
+                    $(currNode.li).click()
+                }
+                if (a.type == 'copy') {
+                    let sId = a.data.sId;
+                    let eId = a.data.eId;
+                    this.copyBuffer = $(sId).nextUntil(eId).addBack().add(eId)
+                        .map((i, el) => el.innerText).toArray().join(' ');
+                }
+                if (a.type == 'paste') {
+                    config.notepad.content = config.notepad.content + this.copyBuffer;
+                    $('#notepad').val(config.notepad.content);
+                }
                 if (a.type == 'ppt-insert-slide') {
                     w2ui.toolbar.onClick();
                 }
                 if (a.type == 'keydown') {
-                    let ev = $.Event('keydown')
-                    ev.keyCode = a.data
-                    $(document).trigger(ev)
+                    if (a.data.keyCode == 13) {
+                        config.notepad.content += '\n';
+                    }
+                    else {
+                        let ev = $.Event('keydown')
+                        ev.keyCode = a.data.keyCode
+                        $(a.data.target).trigger(ev)
+                    }
                 }
                 if (a.type == 'ppt-insert-text') {
                     console.log('ppt-insert-text');

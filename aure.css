@@ -88,7 +88,8 @@
         max-height: 500px;
         transition: left 0.5s;
         border: 1px solid #bbb;
-        background: whitesmoke; }
+        background: whitesmoke;
+        overflow: scroll; }
         #aure #aure-container #aure-action-editor #aure-list.visible {
           left: 399px; }
         #aure #aure-container #aure-action-editor #aure-list #aure-list-items {
