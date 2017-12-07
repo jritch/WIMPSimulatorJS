@@ -3,7 +3,6 @@
 	image_titles: {}
 }
 
-
 var ppt_config = {
 	layout: {
 		name: 'layout',
@@ -56,7 +55,7 @@ var ppt_config = {
 						id: id,
 						text: slide_information['text'][id]
 					},
-					title: 'Add slide text', 
+					title: 'Add slide text',
 					icon: 'font'
 				}))
 			})
@@ -130,7 +129,7 @@ $(function(){
 				{title: 'The.Walking.Dead.S08E01.1080p.WEB-DL.DD5.1.H264-RARBG.mp4', key: 'vlc_4'}
 			]},
 			{title: 'CHI Papers', folder: true, expanded: true, children: [
-				{title: 'PAPER_TITLES.txt'},
+				{title: 'PAPER_TITLES.txt',},
 				{title: 'timbermap.pdf'},
 				{title: 'CHI2011.pdf'},
 				{title: 'storyboarding.pdf'},
@@ -145,6 +144,8 @@ $(function(){
 				{title: '5.jpg'},
 				{title: '6.jpg'},
 				{title: '7.jpg'},
+			]},
+      {title: 'Album Covers', folder: true, expanded: true, children: [
 				{title: '8.jpg'},
 				{title: '9.jpg'},
 				{title: '10.jpg'},
@@ -239,7 +240,7 @@ $(function(){
 							icon: 'keyboard-o',
 						}))
 					}
-				}) 
+				})
 
 				w2ui['sidebar'].on('render',function(event) {
 					ppt_config.sidebar.onClick();
@@ -262,7 +263,7 @@ $(function(){
 							id: id,
 							src: slide_information['image_titles'][id]
 						},
-						title: 'Insert a slide image', 
+						title: 'Insert a slide image',
 						icon: 'paperclip',
 						list: []
 					}))
@@ -322,3 +323,24 @@ $(function(){
 		icon: 'copy'
 	})))
 });
+
+
+// $(function(){
+//     $("#tree").fancytree({
+//       // Image folder used for data.icon attribute.
+//       imagePath: "skin-custom/",
+//       // icon: false,
+//       renderNode: function(event, data) {
+//         // Optionally tweak data.node.span
+//         var node = data.node;
+//         if(node.data.cstrender){
+//           var $span = $(node.span);
+//           $span.find("> span.fancytree-icon").css({
+// //                      border: "1px solid green",
+//             backgroundImage: "url(skin-custom/customDoc2.gif)",
+//             backgroundPosition: "0 0"
+//           });
+//         }
+//       }
+//     });
+//   });
