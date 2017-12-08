@@ -194,8 +194,12 @@ class Aure {
                 if (a.type == 'copy') {
                     let sId = a.data.sId;
                     let eId = a.data.eId;
-                    this.copyBuffer = $(sId).nextUntil(eId).addBack().add(eId)
+                    if (sId == eId) {
+                        this.copyBuffer = $(sId).map((i, el) => el.innerText).toArray().join(' ');
+                    } else {
+                        this.copyBuffer = $(sId).nextUntil(eId).addBack().add(eId)
                         .map((i, el) => el.innerText).toArray().join(' ');
+                    }
                 }
                 if (a.type == 'paste') {
                     config.notepad.content = config.notepad.content + this.copyBuffer;

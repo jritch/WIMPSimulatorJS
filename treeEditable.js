@@ -316,8 +316,8 @@ $(function(){
 	$(document).on('copy', e => aure.addAction(new Action({
 		type: 'copy',
 		data: {
-			sId: '#' + window.getSelection().anchorNode.parentElement.id,
-			eId: '#' + window.getSelection().focusNode.parentElement.id,
+			sId: '.' + window.getSelection().anchorNode.parentElement.className.split(' ').join("."), // DEBUG
+			eId: '.' + window.getSelection().focusNode.parentElement.className.split(' ').join("."), // DEBUG
 		},
 		title: 'Copy text',
 		icon: 'copy'
